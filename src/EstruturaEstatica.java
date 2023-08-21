@@ -1,7 +1,7 @@
 public class EstruturaEstatica<T> {
     // Vai servir de base para as outras estruturas
-    private T[] vetor;
-    private int adicionados;
+    protected T[] vetor;
+    protected int adicionados;
 
     public EstruturaEstatica(int capacidade) {
         this.vetor = (T[]) new Object[capacidade];
@@ -39,6 +39,10 @@ public class EstruturaEstatica<T> {
 
     public int tamanho() {
         return this.adicionados;
+    }
+
+    public boolean isVazia() {
+        return this.adicionados == 0;
     }
 
     @Override
