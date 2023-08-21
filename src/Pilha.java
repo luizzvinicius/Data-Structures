@@ -3,11 +3,25 @@ public class Pilha<T> extends EstruturaEstatica<T> {
         super(capacidade);
     }
 
-    public void adiciona(T elem) {
+    public void empilha(T elem) {
         super.adiciona(elem);
     }
 
-    public void adiciona(T elem, int i) throws Exception {
-        super.adiciona(elem, i);
+    public T topo() {
+        if (this.isVazia()) {
+            return null;
+        }
+        return this.vetor[this.adicionados-1];
     }
+
+    public T desempilha() {
+        if (this.isVazia()) return null;
+        
+        T last = this.vetor[this.adicionados - 1];
+        this.vetor[this.adicionados - 1] = null;
+        this.adicionados--;
+        return last;
+        // return this.vetor[--this.adicionados];
+    }
+
 }
