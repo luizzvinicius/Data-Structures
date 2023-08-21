@@ -1,40 +1,18 @@
-public class Vetor<T> {
+public class Vetor<T> extends EstruturaEstatica<T> {
     private T[] vetor;
     private int adicionados;
 
     public Vetor(int capacidade) {
-        this.vetor = (T[]) new Object[capacidade];
-        this.adicionados = 0;
+        super(capacidade);
     }
 
     // adicionar elemento
     public void adiciona(T elem) {
-        this.aumentaCapacidade();
-        this.vetor[this.adicionados] = elem;
-        this.adicionados++;
+        super.adiciona(elem);
     }
 
     public void adiciona(T elem, int index) throws Exception {
-        this.aumentaCapacidade();
-        if (index < 0 || index > this.adicionados) {
-            throw new IllegalArgumentException("Posição inválida.");
-        }
-        for (var i = this.adicionados; i > index; i--) {
-            this.vetor[i] = this.vetor[i - 1];
-        }
-        this.vetor[index] = elem;
-        this.adicionados++;
-    }
-
-    private void aumentaCapacidade() {
-        var size = this.vetor.length;
-        if (this.adicionados == size) {
-            var biggerVetor = (T[]) new Object[size * 2];
-            for (var i = 0; i < this.vetor.length; i++) {
-                biggerVetor[i] = this.vetor[i];
-            }
-            this.vetor = biggerVetor;
-        }
+        super.adiciona(elem, index);
     }
 
     // buscar elemento
@@ -95,32 +73,7 @@ public class Vetor<T> {
 
         // opção 2
         // this.vetor = (T[]) new Object[this.adicionados];
-        
+
         this.adicionados = 0;
-    }
-
-    // verificar quantidade
-    public int tamanho() {
-        return this.adicionados;
-    }
-
-    // mostrar elementos
-    @Override
-    public String toString() {
-        var s = new StringBuilder();
-        s.append("[");
-
-        for (var i = 0; i < this.adicionados; i++) {
-            s.append(this.vetor[i]);
-            s.append(", ");
-        }
-
-        if (this.adicionados > 0) {
-            var size = s.length();
-            s.delete(size - 2, size);
-        }
-
-        s.append("]");
-        return s.toString();
     }
 }
