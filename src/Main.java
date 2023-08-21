@@ -2,16 +2,17 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        var lista = new Vetor<String>(1);
-        lista.adiciona("A");
-        lista.adiciona("B");
-        lista.adiciona("C");
-        lista.adiciona("C");
-        lista.adiciona("C");
-        lista.adiciona("E");
-        lista.adiciona("F");
+        Pilha<String> pilha = new Pilha<String>(2);
+        pilha.adiciona("Gym");
+        pilha.adiciona("Leg day");
 
-        lista.limpa();
-        System.out.println(lista.toString());
+        try {
+            pilha.adiciona("Hard");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(pilha.desempilha());
+        System.out.println(pilha);
     }
 }
