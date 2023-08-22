@@ -2,17 +2,22 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Pilha<String> pilha = new Pilha<String>(2);
-        pilha.adiciona("Gym");
-        pilha.adiciona("Leg day");
-
-        try {
-            pilha.adiciona("Hard");
+        var quociente = new Pilha<Integer>(10);
+        
+        try (Scanner scan = new Scanner(System.in)) {
+            System.out.print("Digite o número: ");
+            int num = scan.nextInt();
+            while (num > 0) {
+                quociente.empilha(num % 2);
+                num /= 2;
+            }
+            while (!quociente.isVazia()) {
+                System.out.print(quociente.desempilha());
+            }
+            
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        System.out.println(pilha.desempilha());
-        System.out.println(pilha);
     }
 }
