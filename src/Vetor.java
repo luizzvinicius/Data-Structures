@@ -47,13 +47,7 @@ public class Vetor<T> extends EstruturaEstatica<T> {
 
     // excluir elemento
     public void remove(int index) throws IllegalArgumentException {
-        if (!(index >= 0 && index < this.adicionados)) {
-            throw new IllegalArgumentException("Posição inválida.");
-        }
-        for (var i = index; i < this.adicionados - 1; i++) {
-            this.vetor[i] = this.vetor[i + 1];
-        }
-        this.adicionados--;
+        super.remove(index);
     }
 
     public void remove(T elem) {

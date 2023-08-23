@@ -37,6 +37,16 @@ public class EstruturaEstatica<T> {
         }
     }
 
+    protected void remove(int index) throws IllegalArgumentException {
+        if (!(index >= 0 && index < this.adicionados)) {
+            throw new IllegalArgumentException("Posição inválida.");
+        }
+        for (var i = index; i < this.adicionados - 1; i++) {
+            this.vetor[i] = this.vetor[i + 1];
+        }
+        this.adicionados--;
+    }
+
     public int tamanho() {
         return this.adicionados;
     }
