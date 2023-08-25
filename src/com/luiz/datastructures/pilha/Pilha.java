@@ -1,3 +1,7 @@
+package com.luiz.datastructures.pilha;
+
+import com.luiz.datastructures.base.EstruturaEstatica;
+
 public class Pilha<T> extends EstruturaEstatica<T> {
     public Pilha(int capacidade) {
         super(capacidade);

@@ -1,3 +1,5 @@
+package com.luiz.datastructures.base;
+
 public class EstruturaEstatica<T> {
     // Vai servir de base para as outras estruturas
     protected T[] vetor;

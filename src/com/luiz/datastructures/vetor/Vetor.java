@@ -1,3 +1,7 @@
+package com.luiz.datastructures.vetor;
+
+import com.luiz.datastructures.base.EstruturaEstatica;
+
 public class Vetor<T> extends EstruturaEstatica<T> {
     private T[] vetor;
     private int adicionados;

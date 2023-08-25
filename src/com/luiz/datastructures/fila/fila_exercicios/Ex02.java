@@ -1,4 +1,7 @@
+package com.luiz.datastructures.fila.fila_exercicios;
 import java.util.*;
+
+import com.luiz.datastructures.fila.FilaPrioridade;
 
 public class Ex02 {
     public static void main(String[] args) {

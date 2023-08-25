@@ -1,3 +1,7 @@
+package com.luiz.datastructures.fila.fila_exercicios;
+
+import com.luiz.datastructures.fila.Fila;
+
 public class Ex01 {
     public static void main(String[] args) {
         /*
