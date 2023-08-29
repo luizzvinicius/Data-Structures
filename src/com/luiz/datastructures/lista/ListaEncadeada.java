@@ -15,6 +15,44 @@ public class ListaEncadeada<T> {
         this.ultimo = no;
         this.tamanho++;
     }
+    
+    public int index(T elem) {
+        var start = this.inicio;
+        for (var i = 0; i < this.tamanho; i++) {
+            if (start.getElem().equals(elem)) {
+                return i;
+            }
+            start = start.getProximo();
+        }
+        return -1;
+    }
+
+    public T busca(int index) throws Exception {
+        boolean valido = this.validaIndex(index);
+        if (!valido) throw new Exception("indice inválido");
+        
+        var start = this.inicio;
+        for (int i = 0; i < index; i++) {
+            start = start.getProximo();
+        }
+        return start.getElem();
+    }
+    
+    public No<T> getFirst() throws Exception {
+        var elem = this.inicio;
+        if (elem == null) {
+            throw new Exception("Elemento é null");
+        }
+        return elem;
+    }
+
+    public No<T> getLast() throws Exception {
+        var elem = this.ultimo;
+        if (elem == null) {
+            throw new Exception("Elemento é null");
+        }
+        return elem;
+    }
 
     public void limpa() {
         for (No<T> atual = this.inicio; atual != null;) {
@@ -25,6 +63,13 @@ public class ListaEncadeada<T> {
         }
 
         this.tamanho = 0;
+    }
+
+    private boolean validaIndex(int index) {
+        if (!(index >= 0 && index < this.tamanho)) {
+            return false;
+        }
+        return true;
     }
 
     public int getTamanho() {
