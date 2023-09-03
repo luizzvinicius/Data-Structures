@@ -29,4 +29,11 @@ public class No<T> {
     public void setProximo(No<T> proximo) {
         this.proximo = proximo;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("No [elem=").append(elem).append(", proximo=").append(proximo).append("]");
+        return builder.toString();
+    }
 }
