@@ -15,7 +15,36 @@ public class ListaEncadeada<T> {
         this.ultimo = no;
         this.tamanho++;
     }
-    
+
+    public void adiciona(T elem, int index) {
+        try {
+            this.validaIndex(index);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        
+        No<T> novoNo = new No<>(elem);
+        No<T> inicial = this.inicio, anterior = this.inicio;
+        if (index == 0) {
+            No<T> novaCabeca = new No<>(elem, inicial); // apenas para usar o outro construtor
+            this.inicio = novaCabeca;
+        } else if (index == this.tamanho) {
+            this.adiciona(elem);
+            return; // para não aumentar o tamanho 2x
+        } else {
+            for (int i = 0; i < index; i++) {
+                if (i + 1 == index) {
+                    novoNo.setProximo(anterior.getProximo());
+                    anterior.setProximo(novoNo);
+                }
+                inicial = inicial.getProximo();
+                anterior = anterior.getProximo();
+            }
+        }
+        this.tamanho++;
+    }
+
     public int index(T elem) {
         var start = this.inicio;
         for (var i = 0; i < this.tamanho; i++) {
@@ -28,16 +57,26 @@ public class ListaEncadeada<T> {
     }
 
     public T busca(int index) throws Exception {
-        boolean valido = this.validaIndex(index);
-        if (!valido) throw new Exception("indice inválido");
-        
+        if (!(index >= 0 && index < this.tamanho)) {
+            throw new Exception("indice inválido");
+        }
+
         var start = this.inicio;
         for (int i = 0; i < index; i++) {
             start = start.getProximo();
         }
         return start.getElem();
     }
-    
+
+    public No<T> remove(int index) {
+        No<T> elem = this.inicio;
+        return elem;
+    }
+
+    public void remove(T elem) {
+
+    }
+
     public No<T> getFirst() throws Exception {
         var elem = this.inicio;
         if (elem == null) {
@@ -61,15 +100,13 @@ public class ListaEncadeada<T> {
             atual.setProximo(null);
             atual = proximo;
         }
-
         this.tamanho = 0;
     }
 
-    private boolean validaIndex(int index) {
-        if (!(index >= 0 && index < this.tamanho)) {
-            return false;
+    private void validaIndex(int index) throws Exception {
+        if (!(index >= 0 && index <= this.tamanho)) {
+            throw new Exception("indice inválido");
         }
-        return true;
     }
 
     public int getTamanho() {
