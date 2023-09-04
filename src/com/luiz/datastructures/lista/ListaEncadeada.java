@@ -4,7 +4,7 @@ public class ListaEncadeada<T> {
     private No<T> inicio;
     private No<T> ultimo;
     private int tamanho;
-
+    // caso queira usar o método insert na última posição, utilize o adiciona.
     public void adiciona(T elem) {
         var no = new No<T>(elem);
         if (this.tamanho == 0) {
@@ -68,13 +68,69 @@ public class ListaEncadeada<T> {
         return start.getElem();
     }
 
-    public No<T> remove(int index) {
-        No<T> elem = this.inicio;
-        return elem;
+    public T removeIndex(int index) {
+        try {
+            this.validaIndex(index);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+
+        No<T> inicial = this.inicio;
+        T retorno = null;
+        if (index == 0) {
+            retorno = this.removeFirst();
+        } else if (index == this.tamanho - 1) {
+            retorno = this.removeLast();
+        } else {
+            for (int i = 0; i < index; i++) {
+                if (i + 1 == index) {
+                    retorno = inicial.getProximo().getElem();
+                    inicial.getProximo().setElem(null);
+                    var aux = inicial.getProximo().getProximo();
+                    inicial.getProximo().setProximo(null);
+                    inicial.setProximo(aux);
+                }
+                inicial = inicial.getProximo();
+            }
+            this.tamanho--;
+        }
+        return retorno;
+    }
+
+    public T removeFirst() {
+        if (this.inicio == null) return null;
+        
+        No<T> curr = this.inicio;
+        T currValue = curr.getElem();
+        this.inicio = this.inicio.getProximo();
+        curr.setElem(null);
+        curr.setProximo(null);
+        this.tamanho--;
+        return currValue;
+    }
+    
+    public T removeLast() {
+        if (this.ultimo == null) return null;
+
+        No<T> inicial = this.inicio;
+        T lastValue = this.ultimo.getElem();
+        for (int i = 0; i < this.tamanho - 1; i++) {
+            if (i == this.tamanho - 1) {
+                this.ultimo = inicial;
+                inicial.getProximo().setElem(null);
+                inicial.setProximo(null);
+            }
+            inicial = inicial.getProximo();
+        }
+        this.tamanho--;
+        return lastValue;
     }
 
     public void remove(T elem) {
-
+        int index = this.index(elem);
+        if (index == -1) return;
+        this.removeIndex(index);
     }
 
     public No<T> getFirst() throws Exception {
@@ -104,7 +160,7 @@ public class ListaEncadeada<T> {
     }
 
     private void validaIndex(int index) throws Exception {
-        if (!(index >= 0 && index <= this.tamanho)) {
+        if (!(index >= 0 && index < this.tamanho)) {
             throw new Exception("indice inválido");
         }
     }

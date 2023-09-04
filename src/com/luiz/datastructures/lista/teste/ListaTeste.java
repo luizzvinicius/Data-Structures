@@ -7,11 +7,18 @@ public class ListaTeste {
         var lista = new ListaEncadeada<Integer>();
 
         lista.adiciona(5);
+        lista.adiciona(6);
         lista.adiciona(9);
         lista.adiciona(13);
         lista.adiciona(17);
-
-        lista.limpa();
+        
+        try {
+            lista.remove(20);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
         System.out.println(lista);
     }
 }
