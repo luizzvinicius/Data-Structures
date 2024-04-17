@@ -1,12 +1,14 @@
 package com.luiz.datastructures.lista;
 
+import java.util.NoSuchElementException;
+
 public class ListaEncadeada<T> {
     private No<T> inicio;
     private No<T> ultimo;
     private int tamanho;
-    // caso queira usar o método insert na última posição, utilize o adiciona.
+
     public void adiciona(T elem) {
-        var no = new No<T>(elem);
+        No<T> no = new No<>(elem);
         if (this.tamanho == 0) {
             this.inicio = no;
         } else {
@@ -16,38 +18,42 @@ public class ListaEncadeada<T> {
         this.tamanho++;
     }
 
-    public void adiciona(T elem, int index) {
-        try {
-            this.validaIndex(index);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return;
+    public void adicionaInicio(T elem) {
+        if (this.tamanho == 0) {
+            this.adiciona(elem);
+        } else {
+            No<T> novoElem = new No<>(elem, this.inicio); // apenas para usar o outro construtor
+            this.inicio = novoElem;
+            this.tamanho++;
         }
-        
-        No<T> novoNo = new No<>(elem);
-        No<T> inicial = this.inicio, anterior = this.inicio;
+    }
+
+    public void adiciona(int index, T elem) throws IllegalArgumentException {
+        if (index < 0 || index > this.tamanho) {
+            throw new IllegalArgumentException("Índice inválido");
+        }
+
         if (index == 0) {
-            No<T> novaCabeca = new No<>(elem, inicial); // apenas para usar o outro construtor
-            this.inicio = novaCabeca;
+            this.adicionaInicio(elem);
         } else if (index == this.tamanho) {
             this.adiciona(elem);
-            return; // para não aumentar o tamanho 2x
         } else {
+            No<T> novoNo = new No<>(elem);
+            No<T> inicial = this.inicio;
             for (int i = 0; i < index; i++) {
                 if (i + 1 == index) {
-                    novoNo.setProximo(anterior.getProximo());
-                    anterior.setProximo(novoNo);
+                    novoNo.setProximo(inicial.getProximo());
+                    inicial.setProximo(novoNo);
                 }
                 inicial = inicial.getProximo();
-                anterior = anterior.getProximo();
             }
+            this.tamanho++;
         }
-        this.tamanho++;
     }
 
     public int index(T elem) {
         var start = this.inicio;
-        for (var i = 0; i < this.tamanho; i++) {
+        for (int i = 0; i < this.tamanho; i++) {
             if (start.getElem().equals(elem)) {
                 return i;
             }
@@ -56,25 +62,18 @@ public class ListaEncadeada<T> {
         return -1;
     }
 
-    public T busca(int index) throws Exception {
-        if (!(index >= 0 && index < this.tamanho)) {
-            throw new Exception("indice inválido");
-        }
+    public T busca(int index) throws IllegalArgumentException {
+        this.validaIndex(index);
 
-        var start = this.inicio;
+        No<T> start = this.inicio;
         for (int i = 0; i < index; i++) {
             start = start.getProximo();
         }
         return start.getElem();
     }
 
-    public T removeIndex(int index) {
-        try {
-            this.validaIndex(index);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
+    public T removeIndex(int index) throws IllegalArgumentException {
+        this.validaIndex(index);
 
         No<T> inicial = this.inicio;
         T retorno = null;
@@ -99,8 +98,10 @@ public class ListaEncadeada<T> {
     }
 
     public T removeFirst() {
-        if (this.inicio == null) return null;
-        
+        if (this.tamanho == 0) {
+            return null;
+        }
+
         No<T> curr = this.inicio;
         T currValue = curr.getElem();
         this.inicio = this.inicio.getProximo();
@@ -109,9 +110,11 @@ public class ListaEncadeada<T> {
         this.tamanho--;
         return currValue;
     }
-    
+
     public T removeLast() {
-        if (this.ultimo == null) return null;
+        if (this.tamanho == 0) {
+            return null;
+        }
 
         No<T> inicial = this.inicio;
         T lastValue = this.ultimo.getElem();
@@ -129,22 +132,25 @@ public class ListaEncadeada<T> {
 
     public void remove(T elem) {
         int index = this.index(elem);
-        if (index == -1) return;
+        if (index == -1) {
+            return;
+        }
+
         this.removeIndex(index);
     }
 
-    public No<T> getFirst() throws Exception {
-        var elem = this.inicio;
+    public No<T> getFirst() throws NoSuchElementException {
+        No<T> elem = this.inicio;
         if (elem == null) {
-            throw new Exception("Elemento é null");
+            throw new NoSuchElementException("Elemento é null");
         }
         return elem;
     }
 
-    public No<T> getLast() throws Exception {
-        var elem = this.ultimo;
+    public No<T> getLast() throws NoSuchElementException {
+        No<T> elem = this.ultimo;
         if (elem == null) {
-            throw new Exception("Elemento é null");
+            throw new NoSuchElementException("Elemento é null");
         }
         return elem;
     }
@@ -159,9 +165,9 @@ public class ListaEncadeada<T> {
         this.tamanho = 0;
     }
 
-    private void validaIndex(int index) throws Exception {
+    private void validaIndex(int index) throws IllegalArgumentException {
         if (!(index >= 0 && index < this.tamanho)) {
-            throw new Exception("indice inválido");
+            throw new IllegalArgumentException("Índice inválido");
         }
     }
 
@@ -176,13 +182,14 @@ public class ListaEncadeada<T> {
         }
 
         var builder = new StringBuilder("[");
-        var atual = this.inicio;
 
-        for (var i = 0; i < this.tamanho; i++) {
+        No<T> atual = this.inicio;
+        for (int i = 0; i < this.tamanho - 1; i++) {
             builder.append(atual.getElem()).append(", ");
             atual = atual.getProximo();
         }
-        builder.delete(builder.length() - 2, builder.length()).append("]");
+
+        builder.append(atual.getElem()).append("]");
         return builder.toString();
     }
 }
