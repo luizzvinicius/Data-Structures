@@ -52,7 +52,7 @@ public class ListaEncadeada<T> {
     }
 
     public int index(T elem) {
-        var start = this.inicio;
+        No<T> start = this.inicio;
         for (int i = 0; i < this.tamanho; i++) {
             if (start.getElem().equals(elem)) {
                 return i;
@@ -62,14 +62,18 @@ public class ListaEncadeada<T> {
         return -1;
     }
 
-    public T busca(int index) throws IllegalArgumentException {
+    private No<T> buscaNo(int index) throws IllegalArgumentException {
         this.validaIndex(index);
 
         No<T> start = this.inicio;
         for (int i = 0; i < index; i++) {
             start = start.getProximo();
         }
-        return start.getElem();
+        return start;
+    }
+
+    public T busca(int index) throws IllegalArgumentException {
+        return this.buscaNo(index).getElem();
     }
 
     public T removeIndex(int index) throws IllegalArgumentException {
