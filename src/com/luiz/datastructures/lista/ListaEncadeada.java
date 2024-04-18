@@ -79,57 +79,49 @@ public class ListaEncadeada<T> {
     public T removeIndex(int index) throws IllegalArgumentException {
         this.validaIndex(index);
 
-        No<T> inicial = this.inicio;
-        T retorno = null;
         if (index == 0) {
-            retorno = this.removeFirst();
+            return this.removeFirst();
         } else if (index == this.tamanho - 1) {
-            retorno = this.removeLast();
+            return this.removeLast();
         } else {
-            for (int i = 0; i < index; i++) {
-                if (i + 1 == index) {
-                    retorno = inicial.getProximo().getElem();
-                    inicial.getProximo().setElem(null);
-                    var aux = inicial.getProximo().getProximo();
-                    inicial.getProximo().setProximo(null);
-                    inicial.setProximo(aux);
-                }
-                inicial = inicial.getProximo();
-            }
+            No<T> anteriorAoRemovido = this.buscaNo(index - 1);
+            No<T> serRemovido = anteriorAoRemovido.getProximo();
+            T retorno = serRemovido.getElem();
+            anteriorAoRemovido.setProximo(serRemovido.getProximo());
+            serRemovido.setProximo(null);
+            serRemovido.setElem(null);
             this.tamanho--;
+            return retorno;
         }
-        return retorno;
     }
 
-    public T removeFirst() {
+    public T removeFirst() throws RuntimeException {
         if (this.tamanho == 0) {
-            return null;
-        }
-
-        No<T> curr = this.inicio;
-        T currValue = curr.getElem();
-        this.inicio = this.inicio.getProximo();
-        curr.setElem(null);
-        curr.setProximo(null);
-        this.tamanho--;
-        return currValue;
-    }
-
-    public T removeLast() {
-        if (this.tamanho == 0) {
-            return null;
+            throw new RuntimeException("Lista está vazia");
         }
 
         No<T> inicial = this.inicio;
-        T lastValue = this.ultimo.getElem();
-        for (int i = 0; i < this.tamanho - 1; i++) {
-            if (i == this.tamanho - 1) {
-                this.ultimo = inicial;
-                inicial.getProximo().setElem(null);
-                inicial.setProximo(null);
+        T removido = this.inicio.getElem();
+        this.inicio = this.inicio.getProximo();
+        inicial.setElem(null);
+        inicial.setProximo(null);
+        this.tamanho--;
+        return removido;
+    }
+
+    public T removeLast() throws RuntimeException {
+        switch (this.tamanho) {
+            case 0 -> throw new RuntimeException("Lista está vazia");
+            case 1 -> {
+                return this.removeFirst();
             }
-            inicial = inicial.getProximo();
         }
+
+        No<T> penultimoNo = this.buscaNo(this.tamanho - 2);
+        T lastValue = this.ultimo.getElem();
+        this.ultimo.setElem(null);
+        this.ultimo = penultimoNo;
+        penultimoNo.setProximo(null);
         this.tamanho--;
         return lastValue;
     }
