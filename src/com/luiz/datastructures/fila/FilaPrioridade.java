@@ -6,6 +6,7 @@ public class FilaPrioridade<T> extends Fila<T> {
         super(capacidade);
     }
 
+    @SuppressWarnings("unchecked")
     public void enfileira(T elem) {
         Comparable<T> chave = (Comparable<T>) elem;
 

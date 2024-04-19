@@ -5,6 +5,7 @@ public class EstruturaEstatica<T> {
     protected T[] vetor;
     protected int adicionados;
 
+    @SuppressWarnings("unchecked")
     public EstruturaEstatica(int capacidade) {
         this.vetor = (T[]) new Object[capacidade];
         this.adicionados = 0;
@@ -21,18 +22,19 @@ public class EstruturaEstatica<T> {
         if (index < 0 || index > this.adicionados) {
             throw new IllegalArgumentException("Posição inválida.");
         }
-        for (var i = this.adicionados; i > index; i--) {
+        for (int i = this.adicionados; i > index; i--) {
             this.vetor[i] = this.vetor[i - 1];
         }
         this.vetor[index] = elem;
         this.adicionados++;
     }
 
+    @SuppressWarnings("unchecked")
     private void aumentaCapacidade() {
-        var size = this.vetor.length;
+        int size = this.vetor.length;
         if (this.adicionados == size) {
-            var biggerVetor = (T[]) new Object[size * 2];
-            for (var i = 0; i < this.vetor.length; i++) {
+            T[] biggerVetor = (T[]) new Object[size * 2];
+            for (int i = 0; i < this.vetor.length; i++) {
                 biggerVetor[i] = this.vetor[i];
             }
             this.vetor = biggerVetor;
@@ -43,7 +45,7 @@ public class EstruturaEstatica<T> {
         if (!(index >= 0 && index < this.adicionados)) {
             throw new IllegalArgumentException("Posição inválida.");
         }
-        for (var i = index; i < this.adicionados - 1; i++) {
+        for (int i = index; i < this.adicionados - 1; i++) {
             this.vetor[i] = this.vetor[i + 1];
         }
         this.adicionados--;
@@ -62,13 +64,13 @@ public class EstruturaEstatica<T> {
         var s = new StringBuilder();
         s.append("[");
 
-        for (var i = 0; i < this.adicionados; i++) {
+        for (int i = 0; i < this.adicionados; i++) {
             s.append(this.vetor[i]);
             s.append(", ");
         }
 
         if (this.adicionados > 0) {
-            var size = s.length();
+            int size = s.length();
             s.delete(size - 2, size);
         }
 

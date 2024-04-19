@@ -21,7 +21,7 @@ public class Vetor<T> extends EstruturaEstatica<T> {
 
     // buscar elemento
     public int busca(T elem) {
-        for (var i = 0; i < this.adicionados; i++) {
+        for (int i = 0; i < this.adicionados; i++) {
             if (this.vetor[i].equals(elem)) {
                 return i;
             }
