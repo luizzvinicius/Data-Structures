@@ -1,4 +1,5 @@
 package com.luiz.datastructures.fila;
+
 public class FilaPrioridade<T> extends Fila<T> {
 
     public FilaPrioridade(int capacidade) {

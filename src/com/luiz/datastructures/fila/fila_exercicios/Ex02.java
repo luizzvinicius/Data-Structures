@@ -1,4 +1,5 @@
 package com.luiz.datastructures.fila.fila_exercicios;
+
 import java.util.*;
 
 import com.luiz.datastructures.fila.FilaPrioridade;
@@ -10,23 +11,20 @@ public class Ex02 {
          * Existe apenas 1 atendente
          * Uma senha normal deve ser atendida após três senhas prioritárias
          * Não havendo prioridades, atendimento normal.
-         */
+        */
 
         record Senha(int numero, int prioridade) implements Comparable<Senha> {
             @Override
             public int compareTo(Senha e1) {
-                if (this.prioridade() < e1.prioridade()) {
-                    return -1;
-                } else if (this.prioridade() > e1.prioridade())
-                    return 1;
-                return 0;
+                return this.prioridade() - e1.prioridade();
             }
         }
+
         var fila = new FilaPrioridade<Senha>(8);
         var filaPrioridade = new FilaPrioridade<Senha>(8);
         final int MAX_PRIORIDADE_ATENDIDAS = 3;
 
-        for (var i = 1; i < 20; i++) {
+        for (int i = 1; i < 20; i++) {
             int prioridade = new Random().nextInt(2) + 1;
             if (prioridade == 1) {
                 filaPrioridade.enfileira(new Senha(i, prioridade));
