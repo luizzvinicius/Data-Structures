@@ -1,21 +1,21 @@
 package com.luiz.datastructures.lista;
 
+import java.util.Arrays;
+
 public class ListaTeste {
     public static void main(String[] args) {
         var lista = new ListaEncadeada<Integer>();
-        
+
         lista.adiciona(1);
-        lista.adiciona(2);
         lista.adiciona(3);
-        lista.adiciona(4);
-        // [1, 2, 3, 4, 5]
-        lista.adiciona(4, 5);
-       
-        System.out.println(lista.removeIndex(0));
-        System.out.println(lista);
-        System.out.println(lista.removeIndex(2));
-        System.out.println(lista);
-        System.out.println(lista.removeIndex(1));
+        lista.adiciona(7);
+        lista.adiciona(9);
+
+        lista.inserirOrdenado(4);
+
+        lista.inverteLista();
+        lista.toVector();
+        System.out.println(Arrays.toString(lista.toVector()));
         System.out.println(lista);
     }
 }

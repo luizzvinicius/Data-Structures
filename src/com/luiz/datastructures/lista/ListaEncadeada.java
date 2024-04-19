@@ -135,6 +135,52 @@ public class ListaEncadeada<T> {
         this.removeIndex(index);
     }
 
+    public void inverteLista() { // exercício
+        No<T> anterior = null;
+        No<T> proximo = null;
+
+        for (No<T> atual = this.inicio; atual != null;) {
+            proximo = atual.getProximo();
+            atual.setProximo(anterior);
+            anterior = atual;
+            atual = proximo;
+        }
+
+        this.inicio = anterior;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T[] toVector() {
+        if (this.tamanho == 0) {
+            return (T[]) new Object[0];
+        }
+
+        Object[] vetor = new Object[this.tamanho];
+
+        No<T> atual = this.inicio;
+        for (int i = 0; i < this.tamanho; i++) {
+            vetor[i] = atual.getElem();
+            atual = atual.getProximo();
+        }
+        return (T[]) vetor;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void inserirOrdenado(T elem) {
+        Comparable<T> chave = (Comparable<T>) elem;
+
+        No<T> inicial = this.inicio;
+        int i;
+        for (i = 0; i < this.tamanho; i++) {
+            if (chave.compareTo(inicial.getElem()) < 0) {
+                break;
+            }
+            inicial = inicial.getProximo();
+        }
+
+        this.adiciona(i, elem);
+    }
+
     public No<T> getFirst() throws NoSuchElementException {
         No<T> elem = this.inicio;
         if (elem == null) {
