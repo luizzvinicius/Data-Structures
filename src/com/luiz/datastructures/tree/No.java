@@ -39,9 +39,7 @@ public class No<T> {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("No [valor=").append(valor).append(", direita=").append(direita).append(", esquerda=")
-                .append(esquerda).append("]");
+        StringBuilder builder = new StringBuilder().append(this.valor);
         return builder.toString();
     }
 }
