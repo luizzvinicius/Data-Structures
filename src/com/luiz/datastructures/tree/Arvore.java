@@ -2,7 +2,6 @@ package com.luiz.datastructures.tree;
 
 public class Arvore<T> {
     private No<T> raiz;
-    private No<T> ultimo;
     private int tamanho;
 
     public Arvore() {
@@ -15,47 +14,62 @@ public class Arvore<T> {
     }
 
     public void adiciona(T valor) {
+        No<T> novo = new No<>(valor);
         if (this.tamanho == 0) {
-            this.raiz = new No<>(valor);
+            this.raiz = novo;
+            this.tamanho++;
+        } else {
+            No<T> atual = this.raiz;
+            @SuppressWarnings("unchecked")
+            Comparable<T> chave = (Comparable<T>) valor;
+            while (true) {
+                if (chave.compareTo(atual.getValor()) < 0) {
+                    if (atual.getEsquerda() != null) {
+                        atual = atual.getEsquerda();
+                    } else {
+                        atual.setEsquerda(novo);
+                        this.tamanho++;
+                        break;
+                    }
+                } else {
+                    if (atual.getDireita() != null) {
+                        atual = atual.getDireita();
+                    } else {
+                        atual.setDireita(novo);
+                        this.tamanho++;
+                        break;
+                    }
+                }
+            }
         }
-        this.tamanho++;
     }
 
-    public void adiciona(int index, T valor) throws IllegalArgumentException {
-        this.validaIndexInsert(index);
-
-        if (this.tamanho == 0) {
-            this.adiciona(valor);
-            return;
-        } else if (index == this.tamanho) {
-            
+    public void emOrdem(No<T> init) {
+        if (init != null) {
+            emOrdem(init.getEsquerda());
+            System.out.print(init.getValor() + " ");
+            emOrdem(init.getDireita());
         }
     }
 
-    // private No<T> buscaNo(int index) throws IllegalArgumentException {
-    //     @SuppressWarnings("unchecked") Comparable<T> chave = (Comparable<T>) valor;
-        
-    //     No<T> atual= this.raiz;
-    //     for (int i = 0; i < index; i++) {
-    //         if (chave.compareTo(atual.getValor()) < 0) {
-    //             atual = atual.getEsquerda();
-    //         } else if (chave.compareTo(atual.getValor()) > 0) {
-    //             atual = atual.getDireita();
-    //         } else {
-    //             return atual;
-    //         }
-    //     }
-    //     return null;
-    // }
+    public void preOrdem(No<T> init) {
+        if (init != null) {
+            System.out.print(init.getValor() + " ");
+            preOrdem(init.getEsquerda());
+            preOrdem(init.getDireita());
+        }
+    }
+
+    public void posOrdem(No<T> init) {
+        if (init != null) {
+            posOrdem(init.getEsquerda());
+            posOrdem(init.getDireita());
+            System.out.print(init.getValor() + " ");
+        }
+    }
 
     private void validaIndexBusca(int index) throws IllegalArgumentException {
         if (!(index >= 0 && index < this.tamanho)) {
-            throw new IllegalArgumentException("Índice inválido");
-        }
-    }
-
-    private void validaIndexInsert(int index) throws IllegalArgumentException {
-        if (!(index >= 0 && index <= this.tamanho)) {
             throw new IllegalArgumentException("Índice inválido");
         }
     }
@@ -64,14 +78,17 @@ public class Arvore<T> {
         return tamanho;
     }
 
-    public No<T> getUltimo() {
-        return ultimo;
+    public No<T> getRaiz() {
+        return raiz;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("[raiz=").append(raiz).append("]");
+        if (this.tamanho == 0) {
+            return "[]";
+        }
+        var builder = new StringBuilder("[");
+
         return builder.toString();
     }
 }
