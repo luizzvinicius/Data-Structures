@@ -17,10 +17,6 @@ public class No<T> {
         return valor;
     }
 
-    public void setValor(T valor) {
-        this.valor = valor;
-    }
-
     public No<T> getDireita() {
         return direita;
     }
