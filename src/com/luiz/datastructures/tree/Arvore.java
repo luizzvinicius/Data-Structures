@@ -44,10 +44,43 @@ public class Arvore<T> {
         }
     }
 
+    public boolean contains(T valor) {
+        No<T> atual = this.raiz;
+        @SuppressWarnings("unchecked")
+        Comparable<T> chave = (Comparable<T>) valor;
+        int index = 0;
+        while (index < this.tamanho) {
+            if (chave.compareTo(atual.getValor()) < 0) {
+                if (atual.getEsquerda() != null) {
+                    atual = atual.getEsquerda();
+                } else {
+                    return false;
+                }
+            } else if (chave.compareTo(atual.getValor()) > 0) {
+                if (atual.getDireita() != null) {
+                    atual = atual.getDireita();
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+            index++;
+        }
+        return false;
+    }
+
     public void emOrdem(No<T> init) {
-        if (init != null) {
+        // if (init != null) {
+        //     emOrdem(init.getEsquerda());
+        //     System.out.print(init.getValor() + " ");
+        //     emOrdem(init.getDireita());
+        // }
+        if (init.getEsquerda() != null) {
             emOrdem(init.getEsquerda());
-            System.out.print(init.getValor() + " ");
+        }
+        System.out.print(init.getValor() + ", ");
+        if (init.getDireita() != null) {
             emOrdem(init.getDireita());
         }
     }
@@ -68,27 +101,11 @@ public class Arvore<T> {
         }
     }
 
-    private void validaIndexBusca(int index) throws IllegalArgumentException {
-        if (!(index >= 0 && index < this.tamanho)) {
-            throw new IllegalArgumentException("Índice inválido");
-        }
-    }
-
     public int getTamanho() {
         return tamanho;
     }
 
     public No<T> getRaiz() {
         return raiz;
-    }
-
-    @Override
-    public String toString() {
-        if (this.tamanho == 0) {
-            return "[]";
-        }
-        var builder = new StringBuilder("[");
-
-        return builder.toString();
     }
 }
