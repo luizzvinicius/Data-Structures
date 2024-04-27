@@ -137,6 +137,10 @@ public class Arvore<T> {
     }
 
     public T menor() {
+        if (this.raiz == null) {
+            return null;
+        }
+
         No<T> atual = this.raiz;
         while (atual.getEsquerda() != null) {
             atual = atual.getEsquerda();
@@ -145,6 +149,10 @@ public class Arvore<T> {
     }
 
     public T maior() {
+        if (this.raiz == null) {
+            return null;
+        }
+
         No<T> atual = this.raiz;
         while (atual.getDireita() != null) {
             atual = atual.getDireita();
