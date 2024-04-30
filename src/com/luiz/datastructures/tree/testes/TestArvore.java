@@ -14,9 +14,12 @@ public class TestArvore {
         arvore.adiciona(7);
         arvore.adiciona(18);
         arvore.adiciona(13);
-        arvore.adiciona(20);
+        arvore.adiciona(15);
+        arvore.adiciona(11);
 
         arvore.emOrdem(arvore.getRaiz());
-        System.out.println("\n" + arvore.contains(13));
+        System.out.println("\n" + arvore.remove(7, arvore.getRaiz()));
+        arvore.emOrdem(arvore.getRaiz());
+        // System.out.println("\n" + arvore.getRaiz());
     }
 }

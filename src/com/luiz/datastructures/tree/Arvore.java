@@ -46,6 +46,34 @@ public class Arvore<T> {
         }
     }
 
+    public No<T> remove(T valor, No<T> node) {
+        if (valor.equals(this.raiz.getValor())) {
+            node = this.raiz;
+        }
+        if (node == null) {
+            return node;
+        }
+        @SuppressWarnings("unchecked")
+        Comparable<T> chave = (Comparable<T>) valor;
+        if (chave.compareTo(node.getValor()) < 0) {
+            node.setEsquerda(this.remove(valor, node.getEsquerda()));
+        } else if (chave.compareTo(node.getValor()) > 0) {
+            node.setDireita(this.remove(valor, node.getDireita()));
+        } else {
+            if (node.getEsquerda() == null) {
+                return node.getDireita();
+            } else if (node.getDireita() == null) {
+                return node.getEsquerda();
+            } else {
+                T substituNo = this.menor(node.getDireita());
+                node.setDireita(this.remove(substituNo, node.getDireita()));
+                node.setValor(substituNo);
+            }
+        }
+        // this.tamanho--; não funciona
+        return node;
+    }
+
     public boolean contains(T valor) {
         No<T> atual = this.raiz;
         @SuppressWarnings("unchecked")
@@ -63,18 +91,18 @@ public class Arvore<T> {
     }
 
     public void emOrdem(No<T> init) {
-        // if (init != null) {
-        //     emOrdem(init.getEsquerda());
-        //     System.out.print(init.getValor() + " ");
-        //     emOrdem(init.getDireita());
-        // }
-        if (init.getEsquerda() != null) {
+        if (init != null) {
             emOrdem(init.getEsquerda());
-        }
-        System.out.print(init.getValor() + ", ");
-        if (init.getDireita() != null) {
+            System.out.print(init.getValor() + " ");
             emOrdem(init.getDireita());
         }
+        // if (init.getEsquerda() != null) {
+        //     emOrdem(init.getEsquerda());
+        // }
+        // System.out.print(init.getValor() + ", ");
+        // if (init.getDireita() != null) {
+        //     emOrdem(init.getDireita());
+        // }
     }
 
     public void preOrdem(No<T> init) {
@@ -136,28 +164,30 @@ public class Arvore<T> {
         return 1 + Math.max(altEsq, altDir);
     }
 
-    public T menor() {
+    public T menor(No<T> qualquer) {
         if (this.raiz == null) {
             return null;
+        } else if (qualquer == null) {
+            qualquer = this.raiz;
         }
 
-        No<T> atual = this.raiz;
-        while (atual.getEsquerda() != null) {
-            atual = atual.getEsquerda();
+        while (qualquer.getEsquerda() != null) {
+            qualquer = qualquer.getEsquerda();
         }
-        return atual.getValor();
+        return qualquer.getValor();
     }
 
-    public T maior() {
+    public T maior(No<T> qualquer) {
         if (this.raiz == null) {
             return null;
+        } else if (qualquer == null) {
+            qualquer = this.raiz;
         }
 
-        No<T> atual = this.raiz;
-        while (atual.getDireita() != null) {
-            atual = atual.getDireita();
+        while (qualquer.getDireita() != null) {
+            qualquer = qualquer.getDireita();
         }
-        return atual.getValor();
+        return qualquer.getValor();
     }
 
     public int getTamanho() {
