@@ -9,12 +9,12 @@ public class No<T> {
         this.valor = valor;
     }
 
-    public No() {
-        this.valor = null;
-    }
-
     public T getValor() {
         return valor;
+    }
+
+    public void setValor(T valor) {
+        this.valor = valor;
     }
 
     public No<T> getDireita() {
