@@ -8,7 +8,6 @@ public class Selection {
         var representacao = Arrays.toString(selection(exemplo));
 
         System.out.println(representacao);
-
     }
 
     public static int[] selection(int[] desordenada) {
