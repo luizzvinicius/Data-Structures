@@ -31,28 +31,17 @@ public class BinarySearch {
 
         return -1;
     }
+
     // public static int binarySearchRecursive(int[] array, int value, int inicio, int fim) { // Recursivo
-    //     int size = array.length;
-    //     if (value < array[0] || value > array[array.length - 1]) {
-    //         return -1;
-    //     }
+    //     if (inicio <= fim) {
+    //         int middle = (inicio + fim) / 2;
 
-    //     int meio = size / 2;
-    //     if (array[meio] == value) {
-    //         return meio;
-    //     } else if (value < array[meio]) {
-    //         var menores = new int[meio];
-    //         for (int i = 0; i < meio; i++) {
-    //             menores[i] = array[i];
+    //         if (array[middle] > value) {
+    //             return binarySearchRecursive(array, value, inicio, middle - 1);
+    //         } else if (array[middle] < value) {
+    //             return binarySearchRecursive(array, value, middle + 1, fim);
     //         }
-    //         binarySearch(menores, value, 0, meio);
-    //     } else if (value > array[meio]) {
-    //         var maiores = new int[fim - meio];
-    //         for (int i = meio; i < fim; i++) {
-    //             maiores[i - meio] = array[i];
-    //         }
-    //         binarySearch(maiores, value, meio, fim);
-
+    //         return middle;
     //     }
     //     return -1;
     // }
