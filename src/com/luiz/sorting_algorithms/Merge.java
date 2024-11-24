@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Merge {
     public static void main(String[] args) {
-        var exemplo = new int[] { 4, 9, 2, 1, 7, 8, 0, 3, 15, 11, 3 };
+        var exemplo = new int[]{4, 9, 2, 1, 7, 5, 8, 0, 3, 9, 3, 2};
         mergeSort(exemplo);
 
         System.out.println(Arrays.toString(exemplo));
@@ -12,9 +12,7 @@ public class Merge {
 
     public static void mergeSort(int[] desordenada) {
         int tamanho = desordenada.length;
-        if (tamanho < 2) {
-            return;
-        }
+        if (tamanho < 2) return;
 
         int metade = tamanho / 2;
         var esquerda = new int[metade];
@@ -33,9 +31,9 @@ public class Merge {
     }
 
     private static void merge(int[] desordenada, int[] esquerda, int[] direita) {
-        int indexEsquerda = 0, indexDireita = 0, indexDesord = 0;
+        int indexDesord = 0, indexEsquerda = 0, indexDireita = 0;
         while (indexEsquerda < esquerda.length && indexDireita < direita.length) {
-            if (esquerda[indexEsquerda] <= direita[indexDireita]) {
+            if (esquerda[indexEsquerda] < direita[indexDireita]) {
                 desordenada[indexDesord] = esquerda[indexEsquerda];
                 indexEsquerda++;
             } else {
